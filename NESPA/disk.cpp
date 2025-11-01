@@ -21,6 +21,7 @@ struct file {
     int size;
     file(string n, int a, int s)
         :name(n), addr(a), size(s){}
+    //test
 };
 
 int main() {

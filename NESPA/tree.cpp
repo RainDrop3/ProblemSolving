@@ -58,6 +58,13 @@ struct Tree {
 
     Node* getRoot() { return root; }
 
+    void preOrder(Node* r) {
+        if (!r) return;
+        cout << r->value << " ";
+        preOrder(r->left);
+        preOrder(r->right);
+    }
+
     void inOrder(Node* r) {
         if (!r) return;
         inOrder(r->left);
@@ -65,46 +72,38 @@ struct Tree {
         inOrder(r->right);
     }
 
-
-    // Tree 구조체 안
-    void printTree(Node* node, int depth = 0) {
-        if (!node) return;
-
-        printTree(node->right, depth + 1);
-
-        for (int i = 0; i < depth; i++)
-            cout << "    ";
-        cout << node->value << "\n";
-
-        printTree(node->left, depth + 1);
+    void postOrder(Node* r) {
+        if (!r) return;
+        postOrder(r->left);
+        postOrder(r->right);
+        cout << r->value << " ";
     }
 
 };
 
 int main() {
-    int N, cnt = 0;
+    int N;
     cin >> N;
-    N--;
+    //N--;
 
     Tree T;
-    string s1, s2, s3, root;
+    string s1, s2, s3;
     while (N--) {
         cin >> s1 >> s2 >> s3;
         if (s3 == "1" || s3 == "2") {
             T.insert(s1, s2, s3);
-            if (!cnt) root = s2;
         }
         else {
             T.insert2(s1, s2, s3);
-            if (!cnt) root = s1;
         }
-        cnt++;
     }
 
     T.determineRoot();
+    T.preOrder(T.getRoot());
+    cout << endl;
     T.inOrder(T.getRoot());
-    //T.printTree(T.nodes[root]);
-
+    cout << endl;
+    T.postOrder(T.getRoot());
 }
 
 /*

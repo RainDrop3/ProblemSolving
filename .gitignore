@@ -39,3 +39,9 @@
 
 # debug information files
 *.dwo
+
+# python
+__pycache__
+
+# vsc extensions
+.cph

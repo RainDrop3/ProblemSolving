@@ -43,19 +43,57 @@ fibo개수가 46개밖에 안돼서 완탐 삽가능.
 ## 3) 표준 풀이
 ### 핵심 아이디어
 - 정석 접근
-```text
+```c++
+#include <iostream>
+#include <vector>
+using namespace std;
 
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    // 1부터 시작: 0은 합에 기여하지 않으므로 제외
+    // 마지막 항이 10^9를 처음 넘을 때까지 생성 (센티널 역할)
+    vector<int> fibo = {1, 2};
+    while (fibo.back() < 1000000000) {
+        fibo.push_back(fibo[fibo.size() - 1] + fibo[fibo.size() - 2]);
+    }
+
+    int t;
+    cin >> t;
+
+    while (t--) {
+        int num;
+        cin >> num;
+
+        // 큰 수부터 그리디로 선택 (제켄도르프 표현)
+        vector<int> res;
+        for (int i = fibo.size() - 1; i >= 0; --i) {
+            if (fibo[i] <= num) {
+                res.push_back(fibo[i]);
+                num -= fibo[i];
+            }
+        }
+
+        // 선택은 내림차순, 출력은 오름차순
+        for (int i = res.size() - 1; i >= 0; --i) {
+            cout << res[i] << (i ? ' ' : '\n');
+        }
+    }
+}
 ```
 
 ### 구현 포인트
-- 필수 자료구조/기법:
-- 시간복잡도:
-- 구현 시 주의점:
+- 필수 자료구조/기법: -
+- 시간복잡도: 거의 동일
+- 구현 시 주의점: -
 
 ### 나와 다른 점
 - 발상 차이:
-- 구현 차이:
-- 성능 차이:
+- 구현 차이: 
+	- fibo배열이 작으므로 굳이 lower_bound사용 안함
+	- 스택 쓸 필요없이 벡터에 넣고 출력은 반대로.
+- 성능 차이: -
 
 
 ## 4) 회고
